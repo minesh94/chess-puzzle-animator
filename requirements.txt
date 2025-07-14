@@ -1,0 +1,6 @@
+requests
+python-chess
+gTTS
+moviepy
+cairosvg
+pillow
