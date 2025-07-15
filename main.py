@@ -5,7 +5,7 @@ import os
 from fetch_daily_puzzle import fetch_and_save_daily_puzzle
 from narration_generator import generate_narration
 from puzzle_config import puzzle_data
-from video_renderer import merge_video_audio
+from video_renderer import merge_video_audio, make_teaser_short
 
 def render_manim():
     subprocess.run([
@@ -16,6 +16,17 @@ def render_manim():
         "--output_file", "puzzle_raw.mp4",
         "--media_dir", "output"
     ], check=True)
+
+def render_teaser():
+    subprocess.run([
+        "manim",
+        "board_renderer.py",
+        "PuzzleTeaserScene",
+        "-qh",
+        "--output_file", "puzzle_teaser_raw.mp4",
+        "--media_dir", "output"
+    ], check=True)
+
 
 def find_rendered_video():
     for root, _, files in os.walk("output"):
@@ -40,7 +51,13 @@ def main():
 
     print("🎞 Merging video + narration...")
     video_path = find_rendered_video()
-    merge_video_audio(video_path, "output/narration.mp3", "output/final_puzzle.mp4")
+    # merge_video_audio(video_path, "output/narration.mp3", "output/final_puzzle.mp4")
+
+    print("📢 Rendering teaser scene...")
+    render_teaser()
+
+    print("📲 Creating teaser short...")
+    make_teaser_short()
 
     print("✅ Done! Check: output/final_puzzle.mp4")
 

@@ -62,3 +62,42 @@ def merge_video_audio(
     video_with_audio.close()
     square_video.close()
     final_vertical.close()
+
+
+def make_teaser_short(
+    teaser_input="output/videos/board_renderer/1080p60/puzzle_teaser_raw.mp4",
+    bg_music_path="music/bg_music.mp3",
+    out_teaser="output/puzzle_teaser_9x16.mp4"
+):
+    video = VideoFileClip(teaser_input)
+
+    # Square crop
+    # --- 2. Square (1:1) video ---
+    square_size = 1080
+    resized = video.resized(height=square_size)
+    square_video = resized.with_effects([
+        Crop(width=square_size, x_center=resized.w / 2)
+    ])
+
+    # --- 3. Vertical (9:16) short using square centered ---
+    target_width = 1080
+    target_height = 1920
+
+    audio_clips = []
+    if os.path.exists(bg_music_path):
+        bg_music_clip = AudioFileClip(bg_music_path).subclipped(0, video.duration)
+        bg_music = bg_music_clip.with_effects([MultiplyVolume(0.2)])
+        audio_clips.insert(0, bg_music)
+
+    final_audio = CompositeAudioClip(audio_clips)
+
+    background = ColorClip((target_width, target_height), color=(0, 0, 0)).with_duration(square_video.duration)
+    centered = square_video.with_position("center").with_audio(final_audio)
+    final_vertical = CompositeVideoClip([background, centered])
+    final_vertical.write_videofile(out_teaser, codec="libx264", audio_codec="aac")
+
+    # Cleanup
+    video.close()
+    final_audio.close()
+    square_video.close()
+    final_vertical.close()

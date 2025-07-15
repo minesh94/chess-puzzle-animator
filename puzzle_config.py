@@ -1,8 +1,8 @@
 # Auto-generated
 
 puzzle_data = {
-    "id": "sucIg",
-    "initial_fen": "6rk/p2q3p/1p3p2/3P4/2r5/5P2/PP3P1P/R2Q1R1K b - - 2 22",
-    "solution_moves": ['Qh3', 'Rg1', 'Qxh2+', 'Kxh2', 'Rh4#'],
-    "themes": ['endgame', 'attraction', 'long', 'mateIn3', 'sacrifice']
+    "id": "nPb3X",
+    "initial_fen": "3rr1k1/2p5/p7/1pP2p2/8/P1Q1n1q1/1P3RP1/1BR3K1 b - - 3 34",
+    "solution_moves": ['Rd1+', 'Rxd1', 'Qxf2+', 'Kxf2', 'Nxd1+', 'Kf3', 'Nxc3'],
+    "themes": ['veryLong', 'crushing', 'attraction', 'fork', 'sacrifice', 'master', 'middlegame']
 }

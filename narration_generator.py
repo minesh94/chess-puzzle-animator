@@ -46,6 +46,8 @@ def generate_narration(fen, san_moves, out_path="output/narration.mp3"):
     for san in san_moves:
         narration_lines.append(describe_move(san, board))
 
+    narration_lines.append("That's the winning solution. Please subscribe for more interesting chess puzzles.")
+
     # Ensure output directory exists
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
 
